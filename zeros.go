@@ -8,7 +8,14 @@ import (
 )
 
 func main() {
-  f, err := os.Open("test.mp4")
+  if len(os.Args) < 2 {
+    log.Fatal("Specify filename")
+    return
+  }
+
+  filename := os.Args[1]
+
+  f, err := os.Open(filename)
   if err != nil {
     log.Fatal(err)
   }
@@ -38,8 +45,8 @@ func main() {
     }
   }
 
-  fmt.Printf("Zero byte count: %d\n", count)
-  fmt.Printf("Total file bytes: %d\n", total)
+  //fmt.Printf("Zero byte count: %d\n", count)
+  //fmt.Printf("Total file bytes: %d\n", total)
   fmt.Printf("%3.3f%% empty\n", float64(count)/float64(total) * 100)
 
   if err := f.Close(); err != nil {
