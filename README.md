@@ -13,5 +13,8 @@ Useful for determining orphaned downloads were close to completion or not. Depen
 * v0.5
   - [x] Count zeros
 * v1.0
-  - [ ] Skip non-contiguous zeros
+  - [ ] flag to skip non-contiguous zeros
+  - [ ] flag to report filename
+  - [ ] flag to skip (no output) files with less than X percent zero
+
 

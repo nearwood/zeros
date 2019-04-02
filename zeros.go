@@ -47,7 +47,7 @@ func main() {
 
   //fmt.Printf("Zero byte count: %d\n", count)
   //fmt.Printf("Total file bytes: %d\n", total)
-  fmt.Printf("%3.3f%% empty\n", float64(count)/float64(total) * 100)
+  fmt.Printf("%s: %3.3f%% empty\n", filename, float64(count)/float64(total) * 100)
 
   if err := f.Close(); err != nil {
     log.Fatal(err)
