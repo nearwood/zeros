@@ -29,9 +29,11 @@ func main() {
 
     if n > 0 {
       total += n
-      for _, b := range data {
-        if b == 0x0 {
-          count += 1
+      for i, b := range data {
+        if i > 0 {
+          if b == 0x0 && data[i - 1] == 0x0 {
+            count += 1
+          }
         }
       }
     }
