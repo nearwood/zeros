@@ -77,7 +77,11 @@ func main() {
 
   var percentZero = float64(count)/float64(total) * 100
   if percentZero >= optThreshold {
-    fmt.Printf(outputTemplate, *pFilenameArg, percentZero)
+    if (optByteCounts) {
+      fmt.Printf(outputTemplate + "%d/%d bytes\n", *pFilenameArg, percentZero, count, total)
+    } else {
+      fmt.Printf(outputTemplate, *pFilenameArg, percentZero)
+    }
   }
 
   if err := f.Close(); err != nil {
