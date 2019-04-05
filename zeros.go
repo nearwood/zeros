@@ -85,9 +85,9 @@ func main() {
     if (optByteCounts) {
       outputString += fmt.Sprintf("%d/%d bytes\n", count, total)
     }
-  }
 
-  fmt.Print(outputString)
+    fmt.Print(outputString)
+  }
 
   if err := f.Close(); err != nil {
     log.Fatal(err)
