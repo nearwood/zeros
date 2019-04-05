@@ -45,6 +45,10 @@ func main() {
     if n > 0 {
       total += n
       for i, b := range data {
+        if i >= n {
+          break
+        }
+
         if i > 0 {
           if (optSkipNC) {
             if b == 0x0 && data[i - 1] == 0x0 {
@@ -68,25 +72,25 @@ func main() {
     }
   }
 
-  //fmt.Printf("Zero byte count: %d\n", count)
-  //fmt.Printf("Total file bytes: %d\n", total)
-  var outputTemplate = "%3.3f%% empty\n"
+  var outputString = ""
+
   if (optPrintFilename) {
-    outputTemplate = "%s: " + outputTemplate
+    outputString += fmt.Sprintf("%s: ", *pFilenameArg)
   }
 
   var percentZero = float64(count)/float64(total) * 100
   if percentZero >= optThreshold {
+    outputString += fmt.Sprintf("%3.3f%% empty\n", percentZero)
+
     if (optByteCounts) {
-      fmt.Printf(outputTemplate + "%d/%d bytes\n", *pFilenameArg, percentZero, count, total)
-    } else {
-      fmt.Printf(outputTemplate, *pFilenameArg, percentZero)
+      outputString += fmt.Sprintf("%d/%d bytes\n", count, total)
     }
   }
+
+  fmt.Print(outputString)
 
   if err := f.Close(); err != nil {
     log.Fatal(err)
   }
-
 }
 
