@@ -6,7 +6,20 @@ Useful for determining orphaned downloads were close to completion or not. Depen
 
 ## Usage
 
-`./zeros file.mp4`
+```
+Usage: zeros [-bytes] [-print] [-skipnc] [-threshold FLOAT] -file FILE
+
+  -bytes
+    	print byte counts
+  -file string
+    	file to parse
+  -print
+    	print filename in output (default true)
+  -skipnc
+    	skip non-contiguous bytes (default true)
+  -threshold float
+    	threshold (0-100%) to print results
+```
 
 ## Roadmap
 
