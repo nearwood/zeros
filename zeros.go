@@ -12,7 +12,7 @@ func main() {
   var pFilenameArg = flag.String("file", "", "file to parse")
   var pPrintFilenameArg = flag.Bool("print", true, "print filename in output")
   var pSkipNCArg = flag.Bool("skipnc", true, "skip non-contiguous bytes")
-  var pPercentThresholdArg = flag.Float64("threshold", 0.0, "threshold (0-100%) to print results")
+  var pPercentThresholdArg = flag.Float64("threshold", 0.0, "output only if the file meets this threshold (0-100%) of zeros")
   var pByteCountsArg = flag.Bool("bytes", false, "print byte counts")
   
   flag.Parse()
@@ -31,10 +31,10 @@ func main() {
   f, err := os.Open(*pFilenameArg)
   if err != nil {
     log.Print(err)
-    flag.PrintDefaults()
     os.Exit(1)
   }
 
+  emptyFile := false
   count := 0
   total := 0
   data := make([]byte, 4096)
@@ -64,6 +64,7 @@ func main() {
     }
 
     if err == io.EOF {
+      emptyFile = true
       break;
     }
 
@@ -78,7 +79,13 @@ func main() {
     outputString += fmt.Sprintf("%s: ", *pFilenameArg)
   }
 
-  var percentZero = float64(count)/float64(total) * 100
+  var percentZero float64
+  
+  if emptyFile {
+    percentZero = 100
+  } else {
+    percentZero = float64(count)/float64(total) * 100
+  }
   if percentZero >= optThreshold {
     outputString += fmt.Sprintf("%3.3f%% empty\n", percentZero)
 
